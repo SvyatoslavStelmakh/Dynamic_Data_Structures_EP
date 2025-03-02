@@ -5,11 +5,11 @@
 int main()
 {
 	long long size = 0;
-	const int size2 = 10 ^ 7 + 1;
+	const int size2 = 10000001;
 	std::cout << "Enter size of the array: ";
 	std::cin >> size;
 	int* pArray = new int[size];
-	int* Amount = new int[size2];
+	int* pAmount = new int[size2];
 	int* pResult = new int[size];
 
 	std::cout << "Enter the way to initialize array:" << std::endl;
@@ -61,17 +61,27 @@ menu:
 	}
 	std::cout << std::endl;
 	
+	//обнуляем массив, в котором будем хранить количество чисел
+	for (int i = 0; i < size2; i++)
+	{
+		pAmount[i] = 0;
+	}
+
 	//отмечаем количество вхождений каждого числа в исходном массиве
 	//каждыый индекс массива Amount соответствует числу исходного массива, элемент массива Amount хранит количество вхождений числа равного индексу
 	for (long long i = 0; i < size; i++)
 	{
-		Amount[pArray[i]]++;
+		pAmount[pArray[i]]++;
 	}
 
+	for (long long i = 0; i < size; i++)
+	{
+		pResult[i] = 0;
+	}
 	int index = 0;
 	for (int i = 0; i < size2; i++)
 	{
-		if (Amount[i] > 1)
+		if (pAmount[i] > 1)
 		{
 			pResult[index] = i;
 			index++;
@@ -79,11 +89,12 @@ menu:
 	}
 
 	std::cout << "Result array" << std::endl;
-	for (int i = 0; i <= index; i++)
+	for (int i = 0; i < index; i++)
 	{
 		std::cout << pResult[i] << " ";
 	}
 		
+	delete[] pAmount;
 	delete[] pResult;
 	delete[] pArray;
 }
