@@ -27,7 +27,7 @@ menu:
 		{
 			for (long long i = 0; i < size; i++)
 			{
-				pArray[i] = rand() % static_cast<int>(10e7) + 1;
+				pArray[i] = rand() % 10000000 + 1;
 			}
 			break;
 		}
@@ -54,12 +54,12 @@ menu:
 		}
 	}
 	//вывод исходного массива
-	std::cout << "Original array" << std::endl;
+	/*std::cout << "Original array" << std::endl;
 	for (long long i = 0; i < size; i++)
 	{
 		std::cout << pArray[i] << " ";
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 	
 	//обнуляем массив, в котором будем хранить количество чисел
 	for (int i = 0; i < size2; i++)

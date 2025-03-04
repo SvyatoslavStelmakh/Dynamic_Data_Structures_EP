@@ -6,7 +6,13 @@
 #include <cmath>
 
 int index(int i, int j, int N);
-void FillMatrixConstants(int* matrix, int N);
-void FillMatrixRandom(int* matrix, int N);
-void FillMatrixUser(int* matrix, int N);
-void OutputMatrix(int* matrix, int N);
+void FillMatrixConstants(double* matrix, int N);
+void FillMatrixConstants(double** matrix, int N);
+void FillMatrixRandom(double* matrix, int N);
+void FillMatrixRandom(double** matrix, int N);
+void FillMatrixUser(double* matrix, int N);
+void FillMatrixUser(double** matrix, int N);
+void OutputMatrix(double* matrix, int N);
+void OutputMatrix(double** matrix, int N);
+void RaiseDegree(double* matrix, double* result, int N, int degree);
+void RaiseDegree(double** matrix, double** result, int N, int degree);

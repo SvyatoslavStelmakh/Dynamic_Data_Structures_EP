@@ -1,15 +1,29 @@
 #include "Header2.2b.h"
 
 int main()
-{
+{	
 	int N = 0;
 	short choice = 0;
 	std::cout << "Enter the order of the matrix: ";
 	std::cin >> N;
 
-	int* pMatrix = new int[N * N];
-	int* pResult = new int[N * N];
-
+	double* pMatrix1 = new double[N * N];
+	double* pResult1 = new double[N * N];
+	double** pMatrix2 = new double* [N];
+	for (int i = 0; i < N; i++)
+		pMatrix2[i] = new double[N];
+	double** pResult2 = new double* [N];
+	for (int i = 0; i < N; i++)
+		pResult2[i] = new double[N];
+		
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			pResult1[index(i, j, N)] = 0;
+		}
+	}
+	
 	enum enmArrayInit { WithConst = 1, WithRand, ByUser, };		//перечисление для выбора способа инициализации массива
 
 menu:
@@ -24,17 +38,17 @@ menu:
 	{
 		case WithConst:
 		{
-			FillMatrixConstants(pMatrix, N);
+			FillMatrixConstants(pMatrix1, N);
 			break;
 		}
 		case WithRand:
 		{
-			FillMatrixRandom(pMatrix, N);
+			FillMatrixRandom(pMatrix1, N);
 			break;
 		}
 		case ByUser:
 		{
-			FillMatrixUser(pMatrix, N);
+			FillMatrixUser(pMatrix1, N);
 			break;
 		}
 		default:
@@ -44,17 +58,22 @@ menu:
 		}
 	}
 
-	OutputMatrix(pMatrix, N);
+	OutputMatrix(pMatrix1, N);
 
 	int degree = 0;
 	std::cout << "Enter degree: ";
 	std::cin >> degree;
 
-	for (int i = 1; i <= degree; i++)
-	{
+	RaiseDegree(pMatrix1, pResult1, N, degree);
 
-	}
-		
-
-	delete[] pMatrix;
+	OutputMatrix(pResult1, N);
+	for (int i = 0; i < N; i++)
+		delete[] pMatrix2[i];
+	delete[] pMatrix2;
+	for (int i = 0; i < N; i++)
+		delete[] pResult2[i];
+	delete[] pResult2;
+	
+	delete[] pMatrix1;
+	delete[] pResult1;
 }
