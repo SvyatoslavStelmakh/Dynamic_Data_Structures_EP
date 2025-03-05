@@ -6,11 +6,23 @@ int main()
 {
 	long long size = 0;
 	const int size2 = 10000001;
+	int number = 0;
 	std::cout << "Enter size of the array: ";
 	std::cin >> size;
-	int* pArray = new int[size];
+	
 	int* pAmount = new int[size2];
-	int* pResult = new int[size];
+	int* pResult = new int[size2];
+
+	//обнуляем массив, в котором будем хранить количество чисел
+	for (int i = 0; i < size2; i++)
+	{
+		pAmount[i] = 0;
+	}
+	//обнуляем результирующий массив
+	for (long long i = 0; i < size2; i++)
+	{
+		pResult[i] = 0;
+	}
 
 	std::cout << "Enter the way to initialize array:" << std::endl;
 	std::cout << "1. with random numbers" << std::endl;
@@ -20,6 +32,10 @@ int main()
 	short choice;
 	std::cin >> choice;
 	srand(time(NULL));
+	//отмечаем количество вхождений каждого числа в исходном массиве
+	//каждыый индекс массива Amount соответствует числу исходного массива, элемент массива Amount хранит количество вхождений числа равного индексу
+
+	std::cout << "Array:" << std::endl;
 menu:
 	switch (choice)
 	{
@@ -27,7 +43,9 @@ menu:
 		{
 			for (long long i = 0; i < size; i++)
 			{
-				pArray[i] = rand() % 10000000 + 1;
+				number = rand() % 10000000 + 1;
+				std::cout << number << " ";
+				pAmount[number]++;
 			}
 			break;
 		}
@@ -35,7 +53,9 @@ menu:
 		{
 			for (long long i = 0; i < size; i++)
 			{
-				std::cin >> pArray[i];
+				std::cin >> number;
+
+				pAmount[number]++;
 			}
 			break;
 		}
@@ -43,7 +63,13 @@ menu:
 		{
 			for (long long i = 0; i < size; i++)
 			{
-				pArray[i] = static_cast<int>(10e7);
+				number = 10000000;
+				std::cout << number << " ";
+				if (pAmount[number] > 1)
+				{
+					continue;
+				}
+				pAmount[number]++;
 			}
 			break;
 		}
@@ -53,31 +79,7 @@ menu:
 			goto menu;
 		}
 	}
-	//вывод исходного массива
-	/*std::cout << "Original array" << std::endl;
-	for (long long i = 0; i < size; i++)
-	{
-		std::cout << pArray[i] << " ";
-	}
-	std::cout << std::endl;*/
-	
-	//обнуляем массив, в котором будем хранить количество чисел
-	for (int i = 0; i < size2; i++)
-	{
-		pAmount[i] = 0;
-	}
-
-	//отмечаем количество вхождений каждого числа в исходном массиве
-	//каждыый индекс массива Amount соответствует числу исходного массива, элемент массива Amount хранит количество вхождений числа равного индексу
-	for (long long i = 0; i < size; i++)
-	{
-		pAmount[pArray[i]]++;
-	}
-
-	for (long long i = 0; i < size; i++)
-	{
-		pResult[i] = 0;
-	}
+	std::cout << std::endl;
 	int index = 0;
 	for (int i = 0; i < size2; i++)
 	{
@@ -96,7 +98,7 @@ menu:
 		
 	delete[] pAmount;
 	delete[] pResult;
-	delete[] pArray;
+	
 }
 
 
