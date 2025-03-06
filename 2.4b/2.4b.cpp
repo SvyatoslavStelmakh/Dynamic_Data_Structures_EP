@@ -2,9 +2,9 @@
 
 int main()
 {
-	Node* top1 = nullptr;
-	Node* top2 = nullptr;
-	Node* result = nullptr;
+	Node* pHead1 = nullptr;
+	Node* pHead2 = nullptr;
+	Node* pResult = nullptr;
 
 	const int MAX = 80;
 	char str1[MAX] = { 0 };
@@ -21,16 +21,18 @@ int main()
 
 	for (int i = 0; i < len1; i++)
 	{
-		Add(top1, str1[i]);
+		Add(pHead1, str1[i]);
 	}
 
 	for (int i = 0; i < len2; i++)
 	{
-		Add(top2, str2[i]);
+		Add(pHead2, str2[i]);
 	}
 
-	Output(top1);
-	Output(top2);
+	Output(pHead1);
+	Output(pHead2);
 
-	
+	FillList(pHead1, pHead2, pResult);
+
+	Output(pResult);
 }

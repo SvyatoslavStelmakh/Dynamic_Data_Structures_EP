@@ -1,29 +1,81 @@
 #include "Header2.4b.h"
 
-void Add(Node*& top, char symbol)
+void Add(Node*& pHead, char symbol)
 {
-    Node* nv = new Node;  // образуем новый элемент списка 
-    nv->s = symbol;
-    nv->link = nullptr;
-    if (!top)   // если список пуст
+    Node* NewEl = new Node;  // образуем новый элемент списка 
+    NewEl->s = symbol;
+    NewEl->link = nullptr;
+    if (!pHead)   // если список пуст
     {
-        top = nv;   // первый элемент списка
+        pHead = NewEl;   // первый элемент списка
         return;
     }
     else
     {
         // вставляем в начало списка 
-        nv->link = top;
-        top = nv;
+        NewEl->link = pHead;
+        pHead = NewEl;
     }
 }
 
-void Output(Node * top)
+bool FindSymbol(Node* pHead, char symbol, Node*& pPrevEl)
 {
-    while (top)
+    Node* pCurrentEl = pHead;
+    pPrevEl = pHead;
+    //поиск элемента c символом = symbol 
+    while (pCurrentEl && pCurrentEl->s != symbol)
     {
-        std::cout << top->s << ' ';
-        top = top->link;
+        pPrevEl = pCurrentEl;
+        pCurrentEl = pCurrentEl->link;
+    }
+    // запоминаем адрес предыдущего элемента 
+    if (pCurrentEl == nullptr) // или просто return pv != nullptr; 
+        return false;
+    return true;
+}
+
+void Delete(Node*& pHead, char symbol)
+{
+    Node* pCurrentEl, *pPrevEl;
+    // поиск элемента с ключом = key 
+    if (!FindSymbol(pHead, symbol, pPrevEl)) // если не нашли 
+        return;
+    if (pPrevEl == pHead) // удаляем первый элемент 
+    {
+        pCurrentEl = pHead;   
+        pHead = pHead->link;
+    }
+    else  // удаляем элемент из середины или конца списка 
+    {
+        pCurrentEl = pPrevEl->link;
+        pPrevEl->link = pCurrentEl->link;
+    }
+    delete pCurrentEl;           // освобождение памяти 
+}
+
+void Output(Node* pHead)
+{
+    while (pHead)
+    {
+        std::cout << pHead->s << ' ';
+        pHead = pHead->link;
     }
     std::cout << "\n";
+}
+
+void FillList(Node* pHead1, Node* pHead2, Node* pResult)
+{
+    Node *pPrevEl;
+
+    while (pHead1)
+    {
+        if (FindSymbol(pHead2, pHead1->s, pPrevEl))
+        {
+            if (!FindSymbol(pResult, pHead1->s, pPrevEl))
+            {
+                Add(pResult, pHead1->s);
+            }
+        }
+        pHead1 = pHead1->link;
+    }
 }

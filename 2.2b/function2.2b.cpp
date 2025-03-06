@@ -11,7 +11,7 @@ void FillMatrixConstants(double* matrix, int N)
 	{
 		for (int j = 0; j < N; j++)
 		{
-			matrix[index(i, j, N)] = (j+1);
+			matrix[index(i, j, N)] = (j + 1);
 		}
 	}
 }
@@ -98,86 +98,114 @@ void OutputMatrix(double** matrix, int N)
 	}
 }
 
-void RaiseDegree(double* matrix, double* result, int N, int degree)
+void RaiseDegree(double* matrix, double* result, int N, int degree)		//возведение матрицы в степень для одномерного массива
 {
-	double* pResultTemp = new double[N * N];
-
+	// Инициализация result как единичной матрицы
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
 		{
-			pResultTemp[index(i, j, N)] = 0;
+			result[index(i, j, N)] = (i == j) ? 1.0 : 0.0;
 		}
 	}
-	for (int i = 0; i < N; i++)
-	{
-		pResultTemp[index(i, i, N)] = 1;
-	}
 
+	// Временная матрица для хранения промежуточных результатов
+	double* temp = new double [N * N];
+	
+	// Возведение матрицы в степень
 	for (int d = 1; d <= degree; d++)
 	{
+		// Обнуляем temp
 		for (int i = 0; i < N; i++)
 		{
 			for (int j = 0; j < N; j++)
 			{
-				for (int k = 0; k < N; ++k) {
-					result[index(i, j, N)] += pResultTemp[index(i, k, N)] * matrix[index(k, j, N)];
+				temp[index(i, j, N)] = 0.0;
+			}
+		}
+
+		// Умножение матриц: temp = result * matrix
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				for (int k = 0; k < N; k++)
+				{
+					temp[index(i, j, N)] += result[index(i, k, N)] * matrix[index(k, j, N)];
 				}
 			}
 		}
 
-		for (int i = 0; i < N; ++i)
+		// Копируем temp в result
+		for (int i = 0; i < N; i++)
 		{
-			for (int j = 0; j < N; ++j)
+			for (int j = 0; j < N; j++)
 			{
-				pResultTemp[index(i, j, N)] = result[index(i, j, N)];
+				result[index(i, j, N)] = temp[index(i, j, N)];
 			}
 		}
 	}
 
-	delete[] pResultTemp;
+	// Освобождаем память
+	delete[] temp;
 }
 
-void RaiseDegree(double** matrix, double** result, int N, int degree)
+void RaiseDegree(double** matrix, double** result, int N, int degree)		//возведение матрицы в степень для двумерного массива
 {
-	double** pResultTemp = new double* [N];
-	for (int i = 0; i < N; i++)
-		pResultTemp[i] = new double[N];
-
-	for (int i = 0; i < N; i++)
+	// Инициализация result как единичной матрицы
+	for (int i = 0; i < N; i++) 
 	{
-		for (int j = 0; j < N; j++)
+		for (int j = 0; j < N; j++) 
 		{
-			pResultTemp[i][j] = 0;
+			result[i][j] = (i == j) ? 1.0 : 0.0;
 		}
 	}
-	for (int i = 0; i < N; i++)
+
+	// Временная матрица для хранения промежуточных результатов
+	double** temp = new double* [N];
+	for (int i = 0; i < N; i++) 
 	{
-		pResultTemp[i][j] = 1;
+		temp[i] = new double[N];
 	}
 
-	for (int d = 1; d <= degree; d++)
+	// Возведение матрицы в степень
+	for (int d = 1; d <= degree; d++) 
 	{
-		for (int i = 0; i < N; i++)
+		// Обнуляем temp
+		for (int i = 0; i < N; i++) 
 		{
-			for (int j = 0; j < N; j++)
+			for (int j = 0; j < N; j++) 
 			{
-				for (int k = 0; k < N; ++k) {
-					result[i][j] += pResultTemp[i][j] * matrix[i][j];
+				temp[i][j] = 0.0;
+			}
+		}
+
+		// Умножение матриц: temp = result * matrix
+		for (int i = 0; i < N; i++) 
+		{
+			for (int j = 0; j < N; j++) 
+			{
+				for (int k = 0; k < N; k++) 
+				{
+					temp[i][j] += result[i][k] * matrix[k][j];
 				}
 			}
 		}
 
-		for (int i = 0; i < N; ++i)
+		// Копируем temp в result
+		for (int i = 0; i < N; i++) 
 		{
-			for (int j = 0; j < N; ++j)
+			for (int j = 0; j < N; j++) 
 			{
-				pResultTemp[i][j] = result[i][j];
+				result[i][j] = temp[i][j];
 			}
 		}
 	}
 
-	for (int i = 0; i < N; i++)
-		delete[] pResultTemp[i];
-	delete[] pResultTemp;
+	// Освобождаем память
+	for (int i = 0; i < N; i++) 
+	{
+		delete[] temp[i];
+	}
+	delete[] temp;
 }

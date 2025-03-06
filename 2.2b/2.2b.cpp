@@ -43,12 +43,12 @@ menu:
 		}
 		case WithRand:
 		{
-			FillMatrixRandom(pMatrix1, N);
+			FillMatrixRandom(pMatrix2, N);
 			break;
 		}
 		case ByUser:
 		{
-			FillMatrixUser(pMatrix1, N);
+			FillMatrixUser(pMatrix2, N);
 			break;
 		}
 		default:
@@ -65,8 +65,8 @@ menu:
 	std::cin >> degree;
 
 	RaiseDegree(pMatrix1, pResult1, N, degree);
-
 	OutputMatrix(pResult1, N);
+
 	for (int i = 0; i < N; i++)
 		delete[] pMatrix2[i];
 	delete[] pMatrix2;
