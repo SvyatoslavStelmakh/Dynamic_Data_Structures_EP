@@ -2,9 +2,11 @@
 
 int main()
 {
-	Node* pHead1 = nullptr;
-	Node* pHead2 = nullptr;
-	Node* pResult = nullptr;
+	MyList L1, L2, L;
+
+	Create(L1);
+	Create(L2);
+	Create(L);
 
 	const int MAX = 80;
 	char str1[MAX] = { 0 };
@@ -16,27 +18,30 @@ int main()
 	std::cout << "Enter second string : ";
 	std::cin.getline(str2, MAX);
 
-	int len1 = strlen(str1); 
+	int len1 = strlen(str1);
 	int len2 = strlen(str2);
 
 	for (int i = 0; i < len1; i++)
 	{
-		Add(pHead1, str1[i]);
+		AddElement(L1, str1[i]);
 	}
 
 	for (int i = 0; i < len2; i++)
 	{
-		Add(pHead2, str2[i]);
+		AddElement(L2, str2[i]);
 	}
-	
-	Output(pHead1);
-	Output(pHead2);
 
-	FillList(pHead1, pHead2, pResult);
+	std::cout << "L1: ";
+	Print(L1);
+	std::cout << "L2: ";
+	Print(L2);
 
-	Output(pResult);
+	FillResultList(L1, L2, L);
 
-	FreeList(pHead1);
-	FreeList(pHead2);
-	FreeList(pResult);
+	std::cout << "L: ";
+	Print(L);
+
+	Delete(L1);
+	Delete(L2);
+	Delete(L);
 }
