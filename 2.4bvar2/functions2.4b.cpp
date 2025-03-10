@@ -4,7 +4,6 @@ void Create(MyList& list)
 {
     Node* pFirstEl = new Node;      //при создании списка по умолчанию создаём первый элемент с пустым payload
     pFirstEl->pNext = nullptr;      
-    pFirstEl->payload.symbol = 0;
     list.pHead = pFirstEl;
     list.nNodesCnt++;
 }
