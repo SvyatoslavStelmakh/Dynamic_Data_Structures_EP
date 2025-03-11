@@ -5,6 +5,7 @@ void Create(MyList& list)
     Node* pFirstEl = new Node;      //при создании списка по умолчанию создаём первый элемент с пустым payload
     pFirstEl->pNext = nullptr;
     pFirstEl->pPrev = nullptr;
+    pFirstEl->payload.number = 0;
     pFirstEl->count = 0;
     list.pHead = pFirstEl;
     list.pTail = pFirstEl;
@@ -36,14 +37,14 @@ void AddElement(MyList& list, double num)
 
 }
 
-void Print(const MyPayload& item)
+void Print(const MyPayload& payload)
 {
-    std::cout << item.number;
+    std::cout << payload.number<<" ";
 }
 
 void Print(const MyList& list)
 {
-    for (Node* p = list.pHead; p != nullptr; p = p->pNext)
+    for (Node* p = list.pHead->pNext; p != nullptr; p = p->pNext)
     {
         Print(p->payload);
     }
@@ -96,7 +97,6 @@ double CalculateExpression(MyList& list, int n)
 
     while (true)
     {
-        
         result *= pFirst->payload.number - pLast->payload.number;
 
         if (pFirst->count == n)
@@ -104,8 +104,6 @@ double CalculateExpression(MyList& list, int n)
 
         pFirst = pFirst->pNext;
         pLast = pLast->pPrev;
-       
-
     }
 
     return result;

@@ -10,12 +10,52 @@ int main()
 
 	MyList list;
 	Create(list);
+	
+	enum enmArrayInit { WithConst = 1, WithRand, ByUser, };		//перечисление для выбора способа инициализации массива
 
-	for (int i = 1; i <= 2 * n; i++)
+menu:
+	std::cout << "Choose the way to initialize the matrix:" << std::endl;
+	std::cout << WithConst << " the elements are initialized with prescribed constants" << std::endl;
+	std::cout << WithRand << " the elements are initialized with random numbers" << std::endl;
+	std::cout << ByUser << " the elements are initialized by the user" << std::endl;
+
+	std::cin >> choice;
+	switch (choice)				//выбор инициализации массива
 	{
-		std::cout << "a" << i << " ";
-		std::cin >> number;
-		AddElement(list, number);
+		case WithConst:
+		{
+			for (int i = 1; i <= 2 * n; i++)
+			{
+				AddElement(list, i);
+			}
+
+			break;
+		}
+		case WithRand:
+		{
+			srand(time(NULL));
+			for (int i = 1; i <= 2 * n; i++)
+			{
+				number = rand() % 11;
+				AddElement(list, number);
+			}
+			break;
+		}
+		case ByUser:
+		{
+			for (int i = 1; i <= 2 * n; i++)
+			{
+				std::cout << "a" << i << " ";
+				std::cin >> number;
+				AddElement(list, number);
+			}
+			break;
+		}
+		default:
+		{
+			std::cout << "invalid value entered, try again" << std::endl;
+			goto menu;
+		}
 	}
 
 	std::cout << "List: ";
@@ -27,47 +67,3 @@ int main()
 	
 }
 
-//menu:
-//	std::cout << "Choose the way to initialize the list:" << std::endl;
-//	std::cout << 1 << " the elements are initialized with prescribed constants" << std::endl;
-//	std::cout << 2 << " the elements are initialized with random numbers" << std::endl;
-//	std::cout << 3 << " the elements are initialized by the user" << std::endl;
-//
-//	std::cin >> choice;
-//
-//	switch (choice)				//выбор инициализации массива
-//	{
-//		case 1:
-//		{
-//			for (int i = 1; i <= 2 * n; i++)
-//			{
-//				AddElement(list, i);
-//			}
-//		
-//			break;
-//		}
-//		case 2:
-//		{
-//			for (int i = 1; i <= 2 * n; i++)
-//			{
-//				number = rand() % 11;
-//				AddElement(list, number);
-//			}
-//			break;
-//		}
-//		case 3:
-//		{
-//			for (int i = 1; i <= 2 * n; i++)
-//			{
-//				std::cout << "a" << i << " ";
-//				std::cin >> number;
-//				AddElement(list, number);
-//			}
-//			break;
-//		}
-//		default:
-//		{
-//			std::cout << "invalid value entered, try again" << std::endl;
-//			goto menu;
-//		}
-//	}
